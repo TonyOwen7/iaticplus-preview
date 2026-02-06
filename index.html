@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aperçu Application IATIC+</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #194285;
+            --secondary: #0092BB;
+            --student: #77AD1C;
+            --professor: #8B1E3F;
+            --admin: #F0B600;
+            --background: #f8fafc;
+            --text: #334155;
+            --light-bg: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .container {
+            background: var(--light-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            margin-top: 20px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* Platform Badges */
+        .platforms {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .platform-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(25, 66, 133, 0.1);
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .platform-badge:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .platform-badge.android {
+            background: rgba(119, 173, 28, 0.1);
+        }
+        
+        .platform-badge.windows {
+            background: rgba(0, 146, 187, 0.1);
+        }
+        
+        .platform-badge.linux {
+            background: rgba(240, 182, 0, 0.1);
+        }
+        
+        .platform-badge.macos {
+            background: rgba(139, 30, 63, 0.1);
+        }
+        
+        /* Demo Access */
+        .demo-access {
+            background: linear-gradient(135deg, rgba(25, 66, 133, 0.05) 0%, rgba(0, 146, 187, 0.05) 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 2px solid rgba(25, 66, 133, 0.2);
+        }
+        
+        .demo-access h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .credentials-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .credentials-table th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .credentials-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .credentials-table tr:hover {
+            background: #f8fafc;
+        }
+        
+        .app-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--student) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .app-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Performance Alert */
+        .performance-alert {
+            background: linear-gradient(135deg, rgba(240, 182, 0, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%);
+            border: 2px solid rgba(240, 182, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .performance-alert::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #F0B600, #D97706);
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .performance-alert h3 {
+            color: #D97706;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .limitations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .limitation {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #F0B600;
+        }
+        
+        .goals {
+            background: rgba(25, 66, 133, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Questionnaire CTA */
+        .questionnaire-cta {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        
+        .questionnaire-cta h2 {
+            margin-bottom: 20px;
+        }
+        
+        .questionnaire-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: var(--primary);
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .questionnaire-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Tabs Navigation */
+        .tabs {
+            margin: 40px 0;
+        }
+        
+        .tab-nav {
+            display: flex;
+            background: white;
+            border-radius: 15px 15px 0 0;
+            overflow: hidden;
+            border-bottom: 3px solid #e2e8f0;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 20px;
+            background: none;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .tab-btn:hover {
+            background: #f8fafc;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .tab-btn.student.active {
+            background: var(--student);
+        }
+        
+        .tab-btn.professor.active {
+            background: var(--professor);
+        }
+        
+        .tab-btn.admin.active {
+            background: var(--admin);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+            background: white;
+            border-radius: 0 0 15px 15px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Screenshot Gallery */
+        .screenshot-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .screenshot-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .screenshot-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .screenshot-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid;
+        }
+        
+        .student .screenshot-img {
+            border-color: var(--student);
+        }
+        
+        .professor .screenshot-img {
+            border-color: var(--professor);
+        }
+        
+        .admin .screenshot-img {
+            border-color: var(--admin);
+        }
+        
+        .screenshot-info {
+            padding: 20px;
+        }
+        
+        .screenshot-info h4 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .screenshot-info p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-nav {
+                flex-direction: column;
+            }
+            
+            .credentials-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .platforms {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .platform-badge {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+        
+        .iatic-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--student) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-eye"></i> Aperçu de l'application IATIC+</h1>
+            <p>
+                Bienvenue sur cette page de démonstration de <strong>l'application IATIC+</strong>, 
+                développée dans le cadre d'un projet étudiant pour simplifier la gestion académique 
+                des filières IATIC en centralisant les outils utilisés par étudiants, enseignants et administration.
+            </p>
+            
+            <div class="platforms">
+                <div class="platform-badge android">
+                    <i class="fab fa-android"></i> Android (mobile)
+                </div>
+                <div class="platform-badge windows">
+                    <i class="fab fa-windows"></i> Windows (desktop)
+                </div>
+                <div class="platform-badge linux">
+                    <i class="fab fa-linux"></i> Linux (desktop)
+                </div>
+                <div class="platform-badge macos">
+                    <i class="fab fa-apple"></i> macOS (desktop)
+                </div>
+            </div>
+            
+            <p style="color: #F0B600; font-weight: 600; margin-top: 10px;">
+                <i class="fas fa-exclamation-triangle"></i> La version iPhone n'est pas encore disponible
+            </p>
+        </div>
+
+        <!-- Demo Access -->
+        <div class="demo-access">
+            <h2><i class="fas fa-key"></i> Accès de démonstration</h2>
+            <table class="credentials-table">
+                <thead>
+                    <tr>
+                        <th>Profil</th>
+                        <th>Identifiant</th>
+                        <th>Mot de passe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Étudiant IATIC 5</strong></td>
+                        <td><code>777150001</code></td>
+                        <td><code>iatic52025</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Étudiant IATIC 4</strong></td>
+                        <td><code>777140001</code></td>
+                        <td><code>iatic42025</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Étudiant IATIC 3</strong></td>
+                        <td><code>777130001</code></td>
+                        <td><code>iatic32025</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Enseignant</strong></td>
+                        <td><code>777200001</code></td>
+                        <td><code>prof2025</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Administration</strong></td>
+                        <td><code>777300001</code></td>
+                        <td><code>admin2025</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <a href="https://iatic-app.vercel.app" target="_blank" class="app-link">
+                <i class="fas fa-external-link-alt"></i> Accéder à l'application (https://iatic-app.vercel.app)
+            </a>
+        </div>
+
+        <!-- Performance Alert -->
+        <div class="performance-alert">
+            <h3><i class="fas fa-server"></i> Performances et hébergement</h3>
+            <p>L'application est actuellement hébergée sur des <strong>offres gratuites</strong>, ce qui peut entraîner :</p>
+            
+            <div class="limitations">
+                <div class="limitation">
+                    <strong><i class="fas fa-clock"></i> Temps de chargement</strong>
+                    <p>Plus longs en raison des limites de ressources</p>
+                </div>
+                <div class="limitation">
+                    <strong><i class="fas fa-users"></i> Capacité limitée</strong>
+                    <p>En cas de forte utilisation simultanée</p>
+                </div>
+                <div class="limitation">
+                    <strong><i class="fas fa-exclamation-circle"></i> Restrictions techniques</strong>
+                    <p>Imposées par les hébergeurs gratuits</p>
+                </div>
+            </div>
+            
+            <p>Ces limitations sont <strong>temporaires</strong> et ne reflètent pas le potentiel réel de l'application.</p>
+            
+            <div class="goals">
+                <p><strong>Avec votre soutien</strong>, nous pourrons :</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Démontrer l'utilité réelle de l'application</li>
+                    <li>Obtenir l'adhésion de l'université</li>
+                    <li>Accéder à des ressources d'hébergement professionnelles</li>
+                    <li>Améliorer les performances, la stabilité et les fonctionnalités</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questionnaire CTA -->
+        <div class="questionnaire-cta">
+            <h2><i class="fas fa-edit"></i> Votre avis compte !</h2>
+            <p>Participez au questionnaire pour nous aider à améliorer l'application et obtenir les ressources nécessaires à son développement.</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdQ76cy5fdx369w1g7FwsiMpkZexVb7hZn28RUyN9UjyG_QjQ/viewform?usp=header" 
+               target="_blank" class="questionnaire-btn">
+                <i class="fas fa-pen-alt"></i> Répondre au questionnaire (2 minutes)
+            </a>
+        </div>
+
+        <!-- Tabs Section -->
+        <div class="tabs">
+            <div class="tab-nav">
+                <button class="tab-btn student active" data-tab="student">
+                    <i class="fas fa-user-graduate"></i> Étudiants
+                </button>
+                <button class="tab-btn professor" data-tab="professor">
+                    <i class="fas fa-chalkboard-teacher"></i> Enseignants
+                </button>
+                <button class="tab-btn admin" data-tab="admin">
+                    <i class="fas fa-user-tie"></i> Administration
+                </button>
+            </div>
+            
+            <!-- Student Tab -->
+            <div id="student" class="tab-content active">
+                <h3><i class="fas fa-user-graduate"></i> Interface Étudiants</h3>
+                <p>Découvrez les fonctionnalités dédiées aux étudiants IATIC : emploi du temps, cours, documents, notes, et bien plus.</p>
+                
+                <div class="screenshot-gallery">
+                    <div class="screenshot-card student">
+                        <img src="https://via.placeholder.com/600x400/77AD1C/FFFFFF?text=Emploi+du+temps+étudiant" alt="Emploi du temps" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Emploi du temps intelligent</h4>
+                            <p>Visualisation hebdomadaire et quotidienne de votre planning, avec navigation entre les semaines et détails des cours.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-card student">
+                        <img src="https://via.placeholder.com/600x400/77AD1C/FFFFFF?text=Cours+et+documents" alt="Cours et documents" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Cours et documents</h4>
+                            <p>Accès à tous vos supports pédagogiques : cours, TD, TP, et corrections. Téléchargement et consultation hors ligne.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-card student">
+                        <img src="https://via.placeholder.com/600x400/77AD1C/FFFFFF?text=Tableau+de+bord" alt="Tableau de bord" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Tableau de bord personnel</h4>
+                            <p>Vue d'ensemble de votre journée : prochains cours, notifications, travaux à rendre, et événements importants.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-card student">
+                        <img src="https://via.placeholder.com/600x400/77AD1C/FFFFFF?text=Système+de+notes" alt="Notes" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Système de notes</h4>
+                            <p>Consultation de vos résultats par semestre et module, avec calcul automatique des moyennes et décisions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Professor Tab -->
+            <div id="professor" class="tab-content">
+                <h3><i class="fas fa-chalkboard-teacher"></i> Interface Enseignants</h3>
+                <p>Outils pédagogiques pour les enseignants : gestion des cours, partage de ressources, communication avec les étudiants.</p>
+                
+                <div class="screenshot-gallery">
+                    <div class="screenshot-card professor">
+                        <img src="https://via.placeholder.com/600x400/8B1E3F/FFFFFF?text=Gestion+des+cours" alt="Gestion des cours" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Gestion des cours</h4>
+                            <p>Planification et modification des séances, attribution des salles, et suivi des présences étudiantes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-card professor">
+                        <img src="https://via.placeholder.com/600x400/8B1E3F/FFFFFF?text=Ressources+pédagogiques" alt="Ressources" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Ressources pédagogiques</h4>
+                            <p>Dépôt et partage de documents avec vos groupes : supports de cours, exercices, corrigés, et annonces.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-card professor">
+                        <img src="https://via.placeholder.com/600x400/8B1E3F/FFFFFF?text=Communication" alt="Communication" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Communication avec les groupes</h4>
+                            <p>Envoi d'annonces importantes, notifications aux étudiants, et gestion des échanges pédagogiques.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-card professor">
+                        <img src="https://via.placeholder.com/600x400/8B1E3F/FFFFFF?text=Évaluation" alt="Évaluation" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Système d'évaluation</h4>
+                            <p>Saisie des notes, attribution des coefficients, et génération de statistiques de performance par groupe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin Tab -->
+            <div id="admin" class="tab-content">
+                <h3><i class="fas fa-user-tie"></i> Interface Administration</h3>
+                <p>Outils de gestion pour l'administration : plannings globaux, coordination des ressources, et supervision académique.</p>
+                
+                <div class="screenshot-gallery">
+                    <div class="screenshot-card admin">
+                        <img src="https://via.placeholder.com/600x400/F0B600/000000?text=Planning+géant" alt="Planning global" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Planning global</h4>
+                            <p>Vue d'ensemble de tous les emplois du temps, avec gestion des conflits de salles et optimisation des ressources.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-card admin">
+                        <img src="https://via.placeholder.com/600x400/F0B600/000000?text=Gestion+des+salles" alt="Gestion salles" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Gestion des salles et ressources</h4>
+                            <p>Attribution et suivi des salles, matériel pédagogique, et coordination entre les différentes filières.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-card admin">
+                        <img src="https://via.placeholder.com/600x400/F0B600/000000?text=Tableau+de+bord+admin" alt="Tableau de bord admin" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Tableau de bord administratif</h4>
+                            <p>Indicateurs clés : taux de présence, performance académique, utilisation des ressources, et alertes importantes.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="screenshot-card admin">
+                        <img src="https://via.placeholder.com/600x400/F0B600/000000?text=Coordination" alt="Coordination" class="screenshot-img">
+                        <div class="screenshot-info">
+                            <h4>Coordination des filières</h4>
+                            <p>Interface de coordination entre IATIC3, IATIC4 et IATIC5, avec gestion des professeurs principaux et chefs de classe.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="iatic-logo">IATIC+</div>
+            <p>Développé par et pour la communauté IATIC • Version 0.1.0</p>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: #94a3b8;">
+                Cette application est en développement actif. Vos retours sont essentiels pour son amélioration.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tabId = btn.getAttribute('data-tab');
+                    
+                    // Remove active class from all buttons and contents
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    btn.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Add placeholder image loading simulation
+            const screenshots = document.querySelectorAll('.screenshot-img');
+            screenshots.forEach(img => {
+                img.onerror = function() {
+                    const color = this.parentElement.classList.contains('student') ? '77AD1C' : 
+                                  this.parentElement.classList.contains('professor') ? '8B1E3F' : 'F0B600';
+                    const text = encodeURIComponent(this.alt);
+                    this.src = `https://via.placeholder.com/600x400/${color}/FFFFFF?text=${text}`;
+                };
+            });
+        });
+    </script>
+</body>
+</html>
